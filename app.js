@@ -20,7 +20,7 @@ const { PORT = 3000, BASE_PATH } = process.env;
 
 /*
 const corsOption = {
-  origin: ['http://localhost:3000', 'https://domainname.nikitapro.nomoreparties.co', 'https://domainname.nikitapro.nomoreparties.co/*'],
+  origin: ['http://localhost:3000', 'https://diplom.nikitapro.nomoreparties.co', 'https://diplom.nikitapro.nomoreparties.co/*'],
   credentials: true,
   // preflightContinue: true,
 }; */
