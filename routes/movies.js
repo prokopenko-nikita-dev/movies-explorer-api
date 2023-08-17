@@ -4,7 +4,7 @@ const { celebrate, Joi } = require('celebrate');
 const { errorMessages } = require('../utils/constants');
 
 const {
-  getMovies,
+  getMovie,
   createMovie,
   deleteMovie,
 } = require('../controllers/movies');
@@ -14,7 +14,7 @@ const validationURL = (message) => (value, helpers) => {
   return helpers.message(message);
 };
 
-//router.get('/', getMovies);
+router.get('/', getMovie);
 
 router.post('/', celebrate({
   body: Joi.object().keys({
@@ -45,3 +45,5 @@ router.delete('/_id', celebrate({
     _id: Joi.string().length(24).hex().required(),
   }),
 }), deleteMovie);
+
+module.exports = router;

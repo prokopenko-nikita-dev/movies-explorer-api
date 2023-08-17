@@ -3,11 +3,10 @@ const { customError } = require('../errors/CustomError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
-const getMovies = (req, res, next) => {
-  console.log();
- /* Movie.find({})
+const getMovie = (req, res, next) => {
+  Movie.find({})
     .then((movies) => res.send(movies))
-    .catch(next);*/
+    .catch(next);
 };
 
 const createMovie = (req, res, next) => {
@@ -70,8 +69,8 @@ const deleteMovie = (req, res, next) => {
     });
 };
 
-module.export = {
-  getMovies,
+module.exports = {
+  getMovie,
   createMovie,
   deleteMovie,
 };

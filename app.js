@@ -51,7 +51,7 @@ app.use('/signin', signin);
 app.use(auth);
 
 app.use('/users', users);
-//app.use('/movies', movies);
+app.use('/movies', movies);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
