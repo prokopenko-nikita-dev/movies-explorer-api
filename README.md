@@ -13,16 +13,16 @@ Web service through which you can find a movie in your personal account
 * with the MongoDB database
 * Api request creation service - Postman and/or Thunder Client
 
-`/routes' — folder with router files  
-`/controllers' — folder with the files of the user's controllers and the card   
-`/models' — folder with files describing the user's schemes and cards  
+- `/routes' — folder with router files  
+- `/controllers' — folder with the files of the user's controllers and the card   
+- `/models' — folder with files describing the user's schemes and cards  
   
 The remaining directories are auxiliary, created if necessary by the developer
 
 ## Project launch
 
-`npm run start' — starts the server   
-`npm run dev' — starts the server with hot-reload
+* `npm run start' — starts the server   
+* `npm run dev' — starts the server with hot-reload
 
 ## Public domain
 
