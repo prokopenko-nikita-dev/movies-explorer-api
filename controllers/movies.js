@@ -19,7 +19,7 @@ const createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    monieId,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -34,7 +34,7 @@ const createMovie = (req, res, next) => {
     trailerLink,
     thumbnail,
     owner,
-    monieId,
+    movieId,
     nameRU,
     nameEN,
   })
@@ -45,7 +45,7 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params._id)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
     })

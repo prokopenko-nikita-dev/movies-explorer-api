@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const isUrl = require('validator/lib/isURL');
+const { errorMessages } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema(
   {
@@ -23,16 +25,28 @@ const movieSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      required: true,
+      validate: {
+        validator: (link) => isUrl(link),
+        message: errorMessages.image,
+      },
     },
     trailerLink: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      required: true,
+      validate: {
+        validator: (link) => isUrl(link),
+        message: errorMessages.trailerLink,
+      },
     },
     thumbnail: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      required: true,
+      validate: {
+        validator: (link) => isUrl(link),
+        message: errorMessages.thumbnail,
+      },
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,

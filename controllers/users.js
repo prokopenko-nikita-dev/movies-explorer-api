@@ -60,19 +60,6 @@ const getUsers = (req, res) => {
     });
 };
 
-const getUserInfo = (req, res, next) => {
-  User.findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
-    })
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      customError(err, req, res, next);
-    });
-};
-
 const updateProfile = (req, res) => {
   const { name, email } = req.body;
   User.findByIdAndUpdate(
@@ -98,6 +85,5 @@ module.exports = {
   createUser,
   login,
   getUsers,
-  getUserInfo,
   updateProfile,
 };
