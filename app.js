@@ -10,7 +10,6 @@ const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limit = require('./middlewares/limit');
-const routes = require('./routes');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 
@@ -33,7 +32,7 @@ app.get('/crash-test', () => {
 });
 
 // все роуты в index.js
-routes(app);
+require('./routes')(app);
 
 app.use('/*', () => {
   throw new NotFoundError('Страница не найдена');

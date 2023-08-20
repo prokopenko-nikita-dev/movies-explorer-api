@@ -52,12 +52,14 @@ const login = (req, res, next) => {
 };
 
 const getUsers = (req, res, next) => {
+  const { _id } = req.user;
+  console.log(req.user, _id);
   User.findById(req.user._id)
     .orFail(() => {
       throw new NotFoundError('Запрашиваемые данные по указанному id не найдены');
     })
     .then((user) => {
-      res.send(user);
+      res.send({ name: user.name, email: user.email });
     })
     .catch((err) => {
       customError(err, req, res, next);
