@@ -3,61 +3,37 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const signup = require('./routes/signup');
-const signin = require('./routes/signin');
-const auth = require('./middlewares/auth');
-const users = require('./routes/users');
-const movies = require('./routes/movies');
 const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limit = require('./middlewares/limit');
+const routes = require('./routes');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 
-/*
-const corsOption = {
-  origin: ['http://localhost:3000', 'https://diplom.nikitapro.nomoreparties.co', 'https://diplom.nikitapro.nomoreparties.co/*'],
-  credentials: true,
-  // preflightContinue: true,
-}; */
-
-const corsOptions1 = {
-  origin: '*',
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
 const app = express();
-app.use(cors(corsOptions1));
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // за 15 минут
-  max: 100, // можно совершить максимум 100 запросов с одного IP
-});
 
 app.use(requestLogger);
-app.use(limiter);
+app.use('/', limit);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/signup', signup);
-app.use('/signin', signin);
-
-app.use(auth);
-
-app.use('/users', users);
-app.use('/movies', movies);
+// CORS
+app.use(cors);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+// все роуты в index.js
+routes(app);
 
 app.use('/*', () => {
   throw new NotFoundError('Страница не найдена');

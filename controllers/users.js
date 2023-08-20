@@ -81,9 +81,21 @@ const updateProfile = (req, res) => {
     });
 };
 
+const logout = (req, res) => {
+  res.cookie('jwt', '', {
+    maxAge: 0,
+    httpOnly: true,
+    secure: true,
+    sameSite: 'None',
+  });
+  res.clearCookie('jwt');
+  return res.send({ message: 'logout - ok!' });
+};
+
 module.exports = {
   createUser,
   login,
   getUsers,
   updateProfile,
+  logout,
 };
