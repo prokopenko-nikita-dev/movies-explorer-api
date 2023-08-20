@@ -23,7 +23,3 @@ The remaining directories are auxiliary, created if necessary by the developer
 
 * `npm run start' — starts the server   
 * `npm run dev' — starts the server with hot-reload
-
-## Public domain
-
-* https://api.diplom.nikitapro.nomoreparties.co 
