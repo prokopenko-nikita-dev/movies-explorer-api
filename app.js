@@ -13,7 +13,7 @@ const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, BASE_PATH } = process.env;
+const { PORT = 3000, DATABASE = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 const corsOptions1 = {
   origin: '',
@@ -23,6 +23,12 @@ const corsOptions1 = {
 
 const app = express();
 app.use(cors(corsOptions1));
+
+mongoose.connect(DATABASE, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  autoIndex: true,
+});
 
 app.use(requestLogger);
 app.use(limit);
@@ -48,16 +54,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-async function main() {
-  await mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-    useNewUrlParser: true,
-  });
-  console.log('Connected to db');
-  await app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-    console.log('Ссылка на сервер');
-    console.log(BASE_PATH);
-  });
-}
-
-main();
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+});
