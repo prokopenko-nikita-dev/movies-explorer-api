@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { HASH_LENGTH, JWT_SECRET } = require('../environment/env');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const { customError } = require('../errors/CustomError');
 const { CREATED } = require('../errors/ErrorStatuses');
 const ConflictError = require('../errors/ConflictError');
 const { errorMessages } = require('../utils/constants');
+
+const { JWT_SECRET = 'JWT_SECRET', NODE_ENV } = process.env;
 
 const createUser = (req, res, next) => {
   const {
@@ -16,7 +17,7 @@ const createUser = (req, res, next) => {
   } = req.body;
 
   bcrypt
-    .hash(password, HASH_LENGTH)
+    .hash(password, 10)
     .then((hash) => User.create({
       name,
       email,
@@ -40,7 +41,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_SECRET', { expiresIn: '7d' });
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
@@ -85,7 +86,9 @@ const updateProfile = (req, res, next) => {
         email,
       });
     })
-    .catch(next);
+    .catch((err) => {
+      customError(err, req, res, next);
+    });
 };
 
 const logout = (req, res) => {
