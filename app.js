@@ -12,8 +12,9 @@ const limit = require('./middlewares/limit');
 const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { DATABASE } = require('./utils/config');
 
-const { PORT = 3000, DATABASE = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
+const { PORT = 3000 } = process.env;
 
 const corsOptions1 = {
   origin: '',
